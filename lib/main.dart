@@ -1,8 +1,5 @@
-import 'dart:ui';
-
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 void main() {
   runApp(const MyApp());
@@ -51,13 +48,18 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void play() async {
-    final file = AssetSource('dune.m4b');
+    // always rename m4b to mp4
+    final file = AssetSource('dune.mp4');
     await _player.setSource(file);
     await _player.resume();
   }
 
+  void playMp3() async {
+    await _player.play(AssetSource('test.mp3'));
+  }
+
   void pause() async {
-    _player.pause();
+    await _player.pause();
   }
 
   @override
@@ -83,6 +85,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: play,
                 child: const Text(
                   'Play',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                onPressed: playMp3,
+                child: const Text(
+                  'Play MP3',
                   style: TextStyle(color: Colors.white),
                 ),
               ),
